@@ -1,0 +1,15 @@
+Téma: uník z väzenia
+Postavy: 
+	 1. Šimon Fečo- 	popis: väzen, kladná postava uníka z väzenia s spoločníkom Dominikom Fečom.
+				control: Player
+
+	 2. Dominik Fečo - 	popis: väzen, kladná postava uníka z väzenia s spoločníkom Šimon Feňák.
+	 			control: Player
+
+	 3. Riaditeľ Petrila - 	popis: riaditeľ, záporná postava stráži väzňov.
+	 			control: NPC
+
+	 4. Strážnici - 	popis: strážnici, záporná postava stráži väzňov.
+				control: NPC
+
+Príbeh: Dominik Fečo a Šimon Feňák sa dostali do väzenia po neuspešnom vlámaní do banky . No teraz po rokoch nabrali odvahu a chcú sa pokúsiť újsť. Podarí sa im to?
