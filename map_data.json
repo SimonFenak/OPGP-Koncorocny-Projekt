@@ -8,15 +8,66 @@
             "00TTSTTT0S000S0000S0000S000000000S00000000",
             "0TTTTSSSS000000000000000000S000000S0000000",
             "TTTTTTTTTT0000000000S0000000S0000000000000",
-            "lPPPPPPPPl00000S00000000S000000000S0000000",
-            "l00000000l0000000000000000S00000S000000000",
-            "l00000000l00000000000000000000S000000S0000",
-            "l00000000000000000000000000000000000000000",
-            "SSSSSSSSSSSSSSSSSSXXXXXSXSSSS00000S000S000",
-            "lPPPPPPPPlGGGGGGGGGGGGGGGGGGGSSGGGGGGGSGGG",
-            "ZDUDDDDDDDDDDDDDDDDDDDSDDDDDSDDDDSDDDDDSDD",
-            "SSSSSSSSSXSSSXSXSXXXXXXSSXXXXSXXXXSSXSSSSS",
-            "SSSSSSSSSXSSSSSSXSSXSXSXXXXXXXXXXXXSXSXSXS"
+            "lPPPPPPPPl00000S00000000SSS0000000S0000000",
+            "l00000000l000000000000000SS00000S000000000",
+            "S0X0S0SS0S0SSSSSS00000000S00S0S000000S0000",
+            "lS00000000000000S0000000000000000000000000",
+            "SSSSSSSSSSSSSSSSSSXXXXXSXSSSSSSSSSSSSSSSSS",
+            "lPPPPPPPPlGGGGGGGGGSSGGGGGGGGSSGGGSGXGSGGG",
+            "ZDUDDDDDDDDDDDDDDDSDDDSDDDDDSDDDDSDDDDDSDD",
+            "SSSSSSSSXSSSSSXSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+            "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+        ],
+        [
+            [
+                "chain.png",
+                50,
+                67,
+                27.0,
+                40.0
+            ],
+            [
+                "chain.png",
+                134,
+                415,
+                27.0,
+                40.0
+            ],
+            [
+                "chain.png",
+                591,
+                497,
+                27.0,
+                40.0
+            ],
+            [
+                "chain.png",
+                404,
+                370,
+                27.0,
+                40.0
+            ],
+            [
+                "chain.png",
+                370,
+                191,
+                27.0,
+                40.0
+            ],
+            [
+                "chain.png",
+                773,
+                211,
+                27.0,
+                40.0
+            ],
+            [
+                "chain.png",
+                334,
+                90,
+                27.0,
+                40.0
+            ]
         ]
     ]
 }
