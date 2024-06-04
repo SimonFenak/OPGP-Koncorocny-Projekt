@@ -12,4 +12,137 @@ Postavy:
 	 4. Strážnici - 	popis: strážnici, záporná postava stráži väzňov.
 				control: NPC
 
-Príbeh: Dominik Fečo a Šimon Feňák sa dostali do väzenia po neuspešnom vlámaní do banky . No teraz po rokoch nabrali odvahu a chcú sa pokúsiť újsť. Podarí sa im to?
+
+PrisonBreak: Príbeh a Scenár
+Úvod
+Dominik Fečo a Šimon Feňak sa dostali do väzenia po neúspešnom vlámaní do banky. Po niekoľkých rokoch strávených vo
+väzení sa rozhodli, že je čas pokúsiť sa o útek a získať späť svoju slobodu. Väzenie riadi Jakub Petrila, prísny a
+nekompromisný riaditeľ, ktorý má podozrenie, že sa niečo chystá.
+
+Level 1: Úvod do Väzenia
+Príbeh:
+Dominik a Šimon sú uzavretí vo väzení a začínajú plánovať svoj útek. Potrebujú získať mapu väzenia a nájsť spôsob, ako
+obísť stráže.
+
+Úlohy:
+
+1. Dominik musí získať mapu väzenia od starého väzňa Juraja.
+2. Šimon musí získať kľúč od skladu od skorumpovaného strážnika Dávida.
+
+Konverzácia:
+
+Dominik a Šimon diskutujú v cele.
+
+Dominik: "Musíme získať mapu tohto miesta. Počul som, že starý Ďuri má jednu."
+
+Šimon: "A ja sa postarám o kľúč od skladu. Dávid je ochotný ho predať za niečo cenné."
+
+Dominik sa obracia na Juraja.
+
+Dominik: "Počul som, že máš mapu väzenia. Potrebujem ju."
+
+Juraj: "Možno. Ale najprv mi pomôž. Mladíci z bunky 5 mi ukradli cigarety. Získaj ich späť a mapa je tvoja."
+
+Šimon sa stretáva s Dávidom.
+
+Šimon: "Dávid, potrebujem kľúč od skladu. Čo za to chceš?"
+
+Dávid: "Získaj pre mňa cigarety od Ďuriho a kľúč je tvoj."
+
+Dominik so Šimonom nájdu v bunke 5 balík cigariet ukrytý pod matracom, jednu polku dajú Dávidovi a druhú Jurajovi a
+získajú za to klúč
+aj mapu.
+
+Jakub Petrila pozoruje väzňov na monitore.
+
+Petrila: "Musím byť obozretný. Tento Fečo a Feňak sú nebezpeční. Ak niečo plánujú, zistím to."
+
+Level 2: Sklad
+Príbeh:
+Po získaní kľúča vstupujú Dominik a Šimon do skladu, aby našli potrebné nástroje pre svoj útek.
+
+Úlohy:
+
+1. Nájsť špeciálne náradie ukryté v sklade.
+2. Vyhnúť sa bezpečnostným kamerám a strážnikom.
+3. Vyriešiť logickú hádanku, aby odblokovali tajné dvere vedúce do kanálov.
+Konverzácia:
+
+Dominik a Šimon v sklade stretávajú Mateja.
+
+Matej: "Čo tu hľadáte, chlapci?"
+
+Dominik: "Náradie na útek. Potrebujeme niečo na prestrihnutie mreží."
+
+Matej: "Mám tu niečo také, ale bude to stáť. Pomôžte mi dostať sa do úkrytu v kanáloch a je vaše."
+
+Šimon: "Dohodnuté. Ukáž nám cestu."
+
+Jakub Petrila si všimne nezvyčajný pohyb na kamerách.
+
+Petrila: "Čo to tu máme? Akékoľvek podozrivé aktivity musím ihneď preveriť."
+
+Level 3: Kanály
+Príbeh:
+Dominik a Šimon sa dostávajú do kanalizácie pod väzením. Cesta je plná nástrah.
+
+Úlohy:
+
+1. Prejsť bludiskom kanálov a vyhnúť sa pasciam.
+2. Pomôcť zranenému väzňovi, ktorý im dá mapu kanálov.
+Konverzácia:
+
+Dominik a Šimon nachádzajú zraneného väzňa.
+
+Zranený Väzeň: "Pomôžte mi, prosím. Mám mapu kanálov, ktorá vám môže pomôcť."
+
+Dominik: "Vydrž, pomôžeme ti."
+
+Zranený Väzeň: "Vďaka. Mapa je vo vrecku. Ukáže vám najbezpečnejšiu cestu."
+
+Petrila informuje strážnikov.
+
+Petrila: "Máme podozrenie na pohyb v kanáloch. Vysielam hliadky. Žiadne chyby!"
+
+Level 4: Väzenský Dvor
+Príbeh:
+Dominik a Šimon sa dostávajú na väzenský dvor, kde ich čakajú posledné prekážky pred únikom. Musia získať pomoc od
+ďalších väzňov, aby vyvolali vzburu a odlákať strážnikov.
+
+Úlohy:
+
+1. Zorganizovať vzburu medzi väzňami.
+2. Dostať sa do kamerovej miestnosti a deaktivovať bezpečnostné systémy.
+Konverzácia:
+
+Dominik a Šimon hovorí s lídrom väzňov, Miškom.
+
+Miško: "Čo chcete, chlapci?"
+
+Šimon: "Potrebujeme tvoju pomoc. Chceme vyvolať vzburu, aby sme mohli utiecť."
+
+Miško: "To nie je jednoduché. Ale ak nám pomôžete s plánom, môžete počítať s našou pomocou."
+
+Dominik: "Čo potrebujete?"
+
+Miško: "Zbraň. V sklade je ukrytá stará puška. Získajte ju a sme v hre."
+
+Jakub Petrila sleduje dianie na dvore.
+
+Petrila: "Vzbura? To nebudem tolerovať. Dám im lekciu, na ktorú nezabudnú."
+
+Level 5: Útek
+Príbeh:
+Dominik a Šimon sa dostávajú na slobodu, ale pred nimi je posledná prekážka – vonkajšia strážna zóna.
+
+Úlohy:
+
+1. Prekonať poslednú strážnu zónu, kde sú ťažko ozbrojení strážnici a bezpečnostné veže.
+Konverzácia:
+
+Petrila: "Utekajú! Okamžite ich zastavte. Za každú cenu!"
+
+Záver
+Po úspešnom úteku sa Dominik a Šimon dostávajú na slobodu. Získavajú späť svoju slobodu a začínajú pátrať po tých, ktorí
+ich zradili, aby očistili svoje meno a získali spravodlivosť. Jakub Petrila, nahnevaný z ich úteku, začína vlastné
+vyšetrovanie, aby ich čo najskôr dolapil.
