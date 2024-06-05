@@ -16,9 +16,20 @@ class player:
     def zaokruhli(self,block_height):
         nasob=self.player_y/block_height
         self.player_y=round(nasob)*block_height+5
+
+class dekoracia:
+    def __init__(self,nazov,osa_x,osa_y,velkost_x,velkost_y):
+        self.nazov=nazov
+        self.osa_x=osa_x
+        self.osa_y = osa_y
+        self.velkost_x = velkost_x
+        self.velkost_y = velkost_y
 # Načítanie JSON dát zo súboru
 with open('map_data.json', 'r', encoding='utf-8') as file:
     level_data = json.load(file)
+dekoralist=level_data['map'][1]
+dekoracie=[]
+
 
 # Spracovanie mapy
 map_data = level_data['map'][0]
@@ -39,6 +50,15 @@ cols = len(map_data[0])
 # Vypočítanie veľkosti bloku
 block_width = screen_width // cols
 block_height = screen_height // rows
+for i in dekoralist:
+    dekoracie.append(dekoracia(nazov=i[0],osa_x=i[1],osa_y=i[2],velkost_x=block_width,velkost_y=block_height))
+def draw_dec():
+    global dekoracie
+    if dekoracie:
+        for i in dekoracie:
+            dec_obrazok = pygame.image.load('decorations/' + i.nazov)
+            dec_obrazok = pygame.transform.scale(dec_obrazok, (i.velkost_x, i.velkost_y))
+            screen.blit(dec_obrazok, (i.osa_x, i.osa_y))
 
 # Načítanie obrázkov a zmena ich veľkosti
 img = pygame.image.load('bloky/img.png')
@@ -174,6 +194,7 @@ while running:
 
     screen.fill((0, 0, 0))
     draw_map()
+    draw_dec()
     screen.blit(playeris.player_img, (playeris.player_x, playeris.player_y))
     screen.blit(player2.player_img, (player2.player_x, player2.player_y))
     pygame.display.flip()
