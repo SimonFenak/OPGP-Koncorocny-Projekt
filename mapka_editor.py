@@ -21,7 +21,7 @@ def load_map_from_json(filename):
         data = json.load(file)
         dekoraciiii=data['map'][1]
         for i in dekoraciiii:
-            dekoracie.append(dekoracia(nazov=i[0],osa_x=i[1],osa_y=i[2],velkost_x=i[3],velkost_y=i[4]))
+            dekoracie.append(dekoracia(nazov=i[0],osa_x=i[1]/ 5 * 3,osa_y=i[2]/ 5 * 3,velkost_x=i[3],velkost_y=i[4]))
         print("Načítané údaje z JSON:", data)  # Diagnostický výstup
         return data['map'][0]
 
@@ -32,7 +32,7 @@ def save_map_to_json(filename, map_data):
     with open(filename, 'w', encoding='utf-8') as file:
         skusaj=[]
         for i in dekoracie:
-            skusaj.append([i.nazov,i.osa_x,i.osa_y,i.velkost_x,i.velkost_y])
+            skusaj.append([i.nazov,i.osa_x* 5  /3,i.osa_y* 5  /3,i.velkost_x,i.velkost_y])
         data = {'map': [map_data,skusaj]}
         json.dump(data, file, ensure_ascii=False, indent=4)
 
@@ -66,6 +66,10 @@ img = pygame.transform.scale(img, (block_width, block_height))
 aktivny_obr=None
 img1 = pygame.image.load('bloky/stone.png')
 img1 = pygame.transform.scale(img1, (block_width, block_height))
+img2 = pygame.image.load('bloky/door.png')
+img2 = pygame.transform.scale(img2, (block_width, block_height))
+img3 = pygame.image.load('bloky/trap.png')
+img3 = pygame.transform.scale(img3, (block_width, block_height))
 pocet = 1
 running = True
 # Získaj cestu k adresáru "bloky"
@@ -94,6 +98,10 @@ def draw_map(map_data):
         for x, char in enumerate(row):
             if char == 'S':
                 screen.blit(img, (x * block_width, y * block_height))
+            elif char == 'D':
+                screen.blit(img2, (x * block_width, y * block_height))
+            elif char == 'T':
+                screen.blit(img3, (x * block_width, y * block_height))
             else:
                 screen.blit(img1, (x * block_width, y * block_height))
 
@@ -115,7 +123,7 @@ def handle_decoration_menu_click(mouse_pos):
         obrazok_rect = pygame.Rect(block_width * 2 * i, screen_height, block_width * 2, block_height * 2)
         if obrazok_rect.collidepoint(mouse_pos):
             print("Klikol si na obrazok", nazvy_suborov_v_priecinku_dec[i])
-            dekoracie.append(dekoracia(nazov=nazvy_suborov_v_priecinku_dec[i],osa_x=screen_width/2,osa_y=screen_height/2,velkost_x=block_width,velkost_y=block_height))
+            dekoracie.append(dekoracia(nazov=nazvy_suborov_v_priecinku_dec[i],osa_x=screen_width* 5/3/2,osa_y=screen_height* 5/ 3/2,velkost_x=block_width,velkost_y=block_height))
 def handle_decoration_click(mouse_pos):
     global dekoracie,aktivny_obr,over
     for i in range(len(dekoracie)):
@@ -200,6 +208,10 @@ def zmena():
     if menime[0] is not None and menime[1] is not None and menimena:
         if menimena == 'img.png':
             new_char = 'S'
+        elif menimena == 'door.png':
+            new_char = 'D'
+        elif menimena == 'trap.png':
+            new_char = 'T'
         else:
             new_char = 'X'
 

@@ -17,9 +17,27 @@ class player:
         nasob=self.player_y/block_height
         self.player_y=round(nasob)*block_height+5
 # Načítanie JSON dát zo súboru
-with open('map_data.json', 'r', encoding='utf-8') as file:
+class dekoracia:
+    def __init__(self,nazov,osa_x,osa_y,velkost_x,velkost_y):
+        self.nazov=nazov
+        self.osa_x=osa_x
+        self.osa_y = osa_y
+        self.velkost_x = velkost_x
+        self.velkost_y = velkost_y
+# Načítanie JSON dát zo súboru
+MAPP='map_data.json'
+with open(MAPP, 'r', encoding='utf-8') as file:
     level_data = json.load(file)
+dekoralist=level_data['map'][1]
+dekoracie=[]
 
+def draw_dec():
+    global dekoracie
+    if dekoracie:
+        for i in dekoracie:
+            dec_obrazok = pygame.image.load('decorations/' + i.nazov)
+            dec_obrazok = pygame.transform.scale(dec_obrazok, (i.velkost_x, i.velkost_y))
+            screen.blit(dec_obrazok, (i.osa_x, i.osa_y))
 # Spracovanie mapy
 map_data = level_data['map'][0]
 
@@ -46,11 +64,15 @@ img = pygame.transform.scale(img, (block_width, block_height))
 
 img1 = pygame.image.load('bloky/stone.png')
 img1 = pygame.transform.scale(img1, (block_width, block_height))
-
+img2 = pygame.image.load('bloky/door.png')
+img2 = pygame.transform.scale(img2, (block_width, block_height))
+img3 = pygame.image.load('bloky/trap.png')
+img3 = pygame.transform.scale(img3, (block_width, block_height))
 # Nastavenia klienta
 server_address = ('localhost', 12345)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+for i in dekoralist:
+    dekoracie.append(dekoracia(nazov=i[0],osa_x=i[1],osa_y=i[2],velkost_x=block_width,velkost_y=block_height))
 # Hráčova pozícia
 playeris = player(block_width, block_height)
 player2 = player(block_width, block_height)
@@ -85,17 +107,28 @@ def draw_map():
         for x, char in enumerate(row):
             if char == 'S':
                 screen.blit(img, (x * block_width, y * block_height))
+            elif char == 'D':
+                screen.blit(img2, (x * block_width, y * block_height))
+            elif char == 'T':
+                screen.blit(img3, (x * block_width, y * block_height))
             else:
                 screen.blit(img1, (x * block_width, y * block_height))
 
 # Funkcia na detekciu kolízií
 def check_collision(player_rect):
+    global MAPP
     for y, row in enumerate(map_data):
         for x, char in enumerate(row):
             if char == 'S':
                 block_rect = pygame.Rect(x * block_width, y * block_height, block_width, block_height)
                 if player_rect.colliderect(block_rect):
                     return True
+            elif char == 'D':
+                print("koneeeeeeeec")
+                MAPP='idemre.json'
+            elif char == 'T':
+                print("skaaaaaaaaap")
+                MAPP = 'idemre.json'
     return False
 
 # Hlavná slučka
@@ -174,8 +207,10 @@ while running:
 
     screen.fill((0, 0, 0))
     draw_map()
+    draw_dec()
     screen.blit(playeris.player_img, (playeris.player_x, playeris.player_y))
     screen.blit(player2.player_img, (player2.player_x, player2.player_y))
+
     pygame.display.flip()
 
 # Ukončenie Pygame
