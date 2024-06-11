@@ -1,5 +1,8 @@
 import pygame
 import sys
+import serverUDP
+import test1
+import test2
 
 # Initialize Pygame
 pygame.init()
@@ -44,6 +47,41 @@ def draw_text_with_outline(text, font, text_color, outline_color, surface, x, y)
     # Draw the main text
     draw_text(text, font, text_color, surface, x, y)
 
+def sub_menu():
+    while True:
+        win.blit(background_image, (0, 0))
+
+        draw_text_with_outline('PrisonBreak', font, GREEN, BLUE, win, WIDTH // 2, HEIGHT // 4)
+
+        # Draw buttons
+        mx, my = pygame.mouse.get_pos()
+
+        button_1 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50)
+        button_2 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 75, 200, 50)
+        button_2 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 175, 200, 50)
+
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 - 25))
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 75))
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 175))
+
+        draw_text('Start Player1', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2)
+        draw_text('Start Player 2', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 100)
+        draw_text('Quit', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 200)
+
+        if button_1.collidepoint((mx, my)):
+            if pygame.mouse.get_pressed()[0]:
+                test1.main()
+        if button_2.collidepoint((mx, my)):
+            if pygame.mouse.get_pressed()[0]:
+                test2.main()
+                
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
 
 def main_menu():
     while True:
@@ -65,7 +103,9 @@ def main_menu():
 
         if button_1.collidepoint((mx, my)):
             if pygame.mouse.get_pressed()[0]:
-                game()
+                serverUDP.main()
+
+                return sub_menu()
         if button_2.collidepoint((mx, my)):
             if pygame.mouse.get_pressed()[0]:
                 pygame.quit()
@@ -84,4 +124,4 @@ def game():
     main_menu()
 
 
-main_menu()
+sub_menu()
