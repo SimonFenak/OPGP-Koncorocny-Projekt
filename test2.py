@@ -1,35 +1,51 @@
 # -*- coding: utf-8 -*-
-import ast
 import json
 import pygame
 import socket
 import sys
+import copy
+
 class player:
-    def __init__(self,block_width,block_height):
+    def __init__(self, block_width, block_height):
         self.player_img = pygame.image.load('player.png')
         self.player_width = block_width
-        self.player_height = block_height-5
+        self.player_height = block_height - 5
         self.player_img = pygame.transform.scale(self.player_img, (self.player_width, self.player_height))
-        self.player_speed = 1
+        self.player_speed = 5
         self.player_x = 0
         self.player_y = 0
-    def zaokruhli(self,block_height):
-        nasob=self.player_y/block_height
-        self.player_y=round(nasob)*block_height+5
-# Načítanie JSON dát zo súboru
+
+    def zaokruhli(self, block_height):
+        nasob = self.player_y / block_height
+        self.player_y = round(nasob) * block_height + 5
+
 class dekoracia:
-    def __init__(self,nazov,osa_x,osa_y,velkost_x,velkost_y):
-        self.nazov=nazov
-        self.osa_x=osa_x
+    def __init__(self, nazov, osa_x, osa_y, velkost_x, velkost_y):
+        self.nazov = nazov
+        self.osa_x = osa_x
         self.osa_y = osa_y
         self.velkost_x = velkost_x
         self.velkost_y = velkost_y
+
 # Načítanie JSON dát zo súboru
-MAPP='map_data.json'
-with open(MAPP, 'r', encoding='utf-8') as file:
-    level_data = json.load(file)
-dekoralist=level_data['map'][1]
+MAPP = 'map_data.json'
+prvotnapozx=0
+prvotnapozy=0
+def load(nazov):
+    with open(nazov, 'r', encoding='utf-8') as file:
+        level_data = json.load(file)
+        return level_data
+def restart_level():
+    global prvotnapozx,prvotnapozy,player2
+    player2.player_x = prvotnapozx
+    player2.player_y = prvotnapozy
+
+dekoralist=load('map_data.json')['map'][1]
 dekoracie=[]
+
+
+# Spracovanie mapy
+map_data = load('map_data.json')['map'][0]
 
 def draw_dec():
     global dekoracie
@@ -38,8 +54,9 @@ def draw_dec():
             dec_obrazok = pygame.image.load('decorations/' + i.nazov)
             dec_obrazok = pygame.transform.scale(dec_obrazok, (i.velkost_x, i.velkost_y))
             screen.blit(dec_obrazok, (i.osa_x, i.osa_y))
+
 # Spracovanie mapy
-map_data = level_data['map'][0]
+
 
 # Inicializácia Pygame
 pygame.init()
@@ -68,19 +85,24 @@ img2 = pygame.image.load('bloky/door.png')
 img2 = pygame.transform.scale(img2, (block_width, block_height))
 img3 = pygame.image.load('bloky/trap.png')
 img3 = pygame.transform.scale(img3, (block_width, block_height))
+
 # Nastavenia klienta
 server_address = ('localhost', 12345)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
 for i in dekoralist:
-    dekoracie.append(dekoracia(nazov=i[0],osa_x=i[1],osa_y=i[2],velkost_x=block_width,velkost_y=block_height))
+    dekoracie.append(dekoracia(nazov=i[0], osa_x=i[1], osa_y=i[2], velkost_x=block_width, velkost_y=block_height))
+
 # Hráčova pozícia
 playeris = player(block_width, block_height)
 player2 = player(block_width, block_height)
+prvotnapozx=0
+prvotnapozy=0
 for y, row in enumerate(map_data):
     for x, char in enumerate(row):
         if char == 'Z':
             playeris.player_x = x * block_width
-            playeris.player_y = y * block_height+5
+            playeris.player_y = y * block_height + 5
             break
     else:
         continue
@@ -90,16 +112,17 @@ for y, row in enumerate(map_data):
     for x, char in enumerate(row):
         if char == 'U':
             player2.player_x = x * block_width
-            player2.player_y = y * block_height+5
+            player2.player_y = y * block_height + 5
             break
     else:
         continue
     break
-
+prvotnapozx=copy.deepcopy(playeris.player_x)
+prvotnapozy=copy.deepcopy(playeris.player_y)
 player_jump = False
-jump_count = 10
-gravity = 1
-skak=True
+jump_count = 15  # Increased jump count for higher jump
+gravity = 0.2
+skak = True
 
 # Funkcia na vykreslenie mapy
 def draw_map():
@@ -116,7 +139,7 @@ def draw_map():
 
 # Funkcia na detekciu kolízií
 def check_collision(player_rect):
-    global MAPP
+    global MAPP,map_data
     for y, row in enumerate(map_data):
         for x, char in enumerate(row):
             if char == 'S':
@@ -124,10 +147,19 @@ def check_collision(player_rect):
                 if player_rect.colliderect(block_rect):
                     return True
             elif char == 'D':
-                print("koneeeeeeeec")
-                MAPP='idemre.json'
+                block_rect = pygame.Rect(x * block_width, y * block_height, block_width, block_height)
+                if player_rect.colliderect(block_rect):
+                    playeris.player_x = prvotnapozx
+                    playeris.player_y = prvotnapozy
+                    map_data=load('idemre.json')['map'][0]
+                    return True
+
             elif char == 'T':
-                print("skaaaaaaaaap")
+                block_rect = pygame.Rect(x * block_width, y * block_height, block_width, block_height)
+                if player_rect.colliderect(block_rect):
+                    playeris.player_x = prvotnapozx
+                    playeris.player_y = prvotnapozy
+                    return True
                 MAPP = 'idemre.json'
     return False
 
@@ -142,6 +174,7 @@ while running:
                 running = False
             elif event.key == pygame.K_SPACE and not player_jump:
                 player_jump = True
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         playeris.player_x -= playeris.player_speed
@@ -151,9 +184,11 @@ while running:
         playeris.player_x += playeris.player_speed
         if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height)):
             playeris.player_x -= playeris.player_speed
+    if keys[pygame.K_r]:
+        playeris.player_x = prvotnapozx
+        playeris.player_y = prvotnapozy
     if not check_collision(pygame.Rect(playeris.player_x, playeris.player_y + playeris.player_speed, playeris.player_width, playeris.player_height)):
         playeris.player_y += playeris.player_speed
-
 
     # Kontrola, aby sa hráč nepresunul mimo obrazovky
     if playeris.player_x < 0:
@@ -162,48 +197,42 @@ while running:
         playeris.player_x = screen_width - playeris.player_width
 
     if player_jump:
-        if jump_count >= -10:
-            neg = 0.1
-            if jump_count <= 0:
-                neg = -0.1
-            playeris.player_y -= (jump_count ** 2) * 0.5 * neg  # Zmena: Ešte pomalšie skoky
-            if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height)) and skak==True :
-                playeris.player_y += (jump_count ** 2) * 0.5 * neg
-                jump_count=0
-                skak=False
-                neg = -0.1
-            if skak==False:
-                neg = -0.1
+        if jump_count >= -15:
+            neg = 0.5 if jump_count > 0 else -1
+            playeris.player_y -= (jump_count ** 2) * 0.25 * neg  # Adjusted jump physics
+            if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height)) and skak:
+                playeris.player_y += (jump_count ** 2) * 0.25 * neg
+                jump_count = 0
+                skak = False
+            if not skak:
                 if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height)):
                     player_jump = False
                     playeris.zaokruhli(block_height)
                     skak = True
-                    neg = 0.1
-                    jump_count = 10
+                    jump_count = 15
 
-            jump_count -= 0.1
-        if jump_count  <= -10:
+            jump_count -= 1
+        if jump_count < -15:
             player_jump = False
             playeris.zaokruhli(block_height)
-            skak=True
-            neg = 0.1
-            jump_count = 10
+            skak = True
+            jump_count = 15
+
     # Kontrola, aby sa hráč nepresunul mimo mapy
     if playeris.player_y < 0:
         playeris.player_y = 0
     elif playeris.player_y + playeris.player_height > screen_height:
         playeris.player_y = screen_height - playeris.player_height
 
-    player_position = str(playeris.player_x)+"."+str(playeris.player_y)
+    player_position = str(playeris.player_x) + "." + str(playeris.player_y)
     # Odošleme pozíciu modrej kocky na server
     client_socket.sendto(player_position.encode(), server_address)
 
     # Prijatie údajov od servera o pozícii červenej kocky
     data, _ = client_socket.recvfrom(1024)
-    player2_position = data.decode()
-    player2_position=str(player2_position).split(".")
-    player2.player_x=int(player2_position[0])
-    player2.player_y=int(player2_position[1])
+    player2_position = data.decode().split(".")
+    player2.player_x = int(player2_position[0])
+    player2.player_y = int(player2_position[1])
 
     screen.fill((0, 0, 0))
     draw_map()
@@ -216,3 +245,5 @@ while running:
 # Ukončenie Pygame
 pygame.quit()
 sys.exit()
+
+
