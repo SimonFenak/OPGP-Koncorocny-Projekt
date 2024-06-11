@@ -115,7 +115,7 @@ def handle_decoration_menu_click(mouse_pos):
         obrazok_rect = pygame.Rect(block_width * 2 * i, screen_height, block_width * 2, block_height * 2)
         if obrazok_rect.collidepoint(mouse_pos):
             print("Klikol si na obrazok", nazvy_suborov_v_priecinku_dec[i])
-            dekoracie.append(dekoracia(nazov=nazvy_suborov_v_priecinku_dec[i],osa_x=screen_width/2,osa_y=screen_height/2,velkost_x=block_width,velkost_y=block_height))
+            dekoracie.append(dekoracia(nazov=nazvy_suborov_v_priecinku_dec[i],osa_x=screen_width* 5/3/2,osa_y=screen_height* 5/ 3/2,velkost_x=block_width,velkost_y=block_height))
 def handle_decoration_click(mouse_pos):
     global dekoracie,aktivny_obr,over
     for i in range(len(dekoracie)):
