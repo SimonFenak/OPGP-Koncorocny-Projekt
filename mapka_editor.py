@@ -21,7 +21,7 @@ def load_map_from_json(filename):
         data = json.load(file)
         dekoraciiii=data['map'][1]
         for i in dekoraciiii:
-            dekoracie.append(dekoracia(nazov=i[0],osa_x=i[1],osa_y=i[2],velkost_x=i[3],velkost_y=i[4]))
+            dekoracie.append(dekoracia(nazov=i[0],osa_x=i[1]/ 5 * 3,osa_y=i[2]/ 5 * 3,velkost_x=i[3],velkost_y=i[4]))
         print("Načítané údaje z JSON:", data)  # Diagnostický výstup
         return data['map'][0]
 
@@ -32,7 +32,7 @@ def save_map_to_json(filename, map_data):
     with open(filename, 'w', encoding='utf-8') as file:
         skusaj=[]
         for i in dekoracie:
-            skusaj.append([i.nazov,i.osa_x,i.osa_y,i.velkost_x,i.velkost_y])
+            skusaj.append([i.nazov,i.osa_x* 5  /3,i.osa_y* 5  /3,i.velkost_x,i.velkost_y])
         data = {'map': [map_data,skusaj]}
         json.dump(data, file, ensure_ascii=False, indent=4)
 
