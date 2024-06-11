@@ -123,7 +123,7 @@ def draw_map():
 
 # Funkcia na detekciu kolízií
 def check_collision(player_rect):
-    global MAPP
+    global MAPP,map_data
     for y, row in enumerate(map_data):
         for x, char in enumerate(row):
             if char == 'S':
@@ -132,9 +132,15 @@ def check_collision(player_rect):
                     return True
             elif char == 'D':
                 block_rect = pygame.Rect(x * block_width, y * block_height, block_width, block_height)
-                if player_rect.colliderect(block_rect):
-                    print("koneeeeeeeec")
-                    MAPP='idemre.json'
+                player_rect2 = pygame.Rect(player2.player_x, player2.player_y, player2.player_width,player2.player_height)
+                if player_rect.colliderect(block_rect) and player_rect2.colliderect(block_rect):
+                    player_position = str(playeris.player_x) + "." + str(playeris.player_y)
+                    # Odošleme pozíciu modrej kocky na server
+                    client_socket.sendto(player_position.encode(), server_address)
+                    playeris.player_x = prvotnapozx
+                    playeris.player_y = prvotnapozy
+                    map_data = load('idemre.json')['map'][0]
+                    return True
             elif char == 'T':
                 block_rect = pygame.Rect(x * block_width, y * block_height, block_width, block_height)
                 if player_rect.colliderect(block_rect):
@@ -169,7 +175,7 @@ while running:
     else:
         kolko=0
 
-
+    g=check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height))
     # Kontrola, aby sa hráč nepresunul mimo obrazovky
     if playeris.player_x < 0:
         playeris.player_x = 0
@@ -202,8 +208,12 @@ while running:
     # Kontrola, aby sa hráč nepresunul mimo mapy
     if playeris.player_y < 0:
         playeris.player_y = 0
+        playeris.player_y=prvotnapozy
+        playeris.player_x =prvotnapozx
     elif playeris.player_y + playeris.player_height > screen_height:
         playeris.player_y = screen_height - playeris.player_height
+        playeris.player_y = prvotnapozy
+        playeris.player_x = prvotnapozx
 
     player_position = str(playeris.player_x)+"."+str(playeris.player_y)
     # Odošleme pozíciu modrej kocky na server
