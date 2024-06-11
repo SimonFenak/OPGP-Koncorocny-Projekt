@@ -66,6 +66,10 @@ img = pygame.transform.scale(img, (block_width, block_height))
 aktivny_obr=None
 img1 = pygame.image.load('bloky/img_1.png')
 img1 = pygame.transform.scale(img1, (block_width, block_height))
+img2 = pygame.image.load('bloky/door.png')
+img2 = pygame.transform.scale(img2, (block_width, block_height))
+img3 = pygame.image.load('bloky/trap.png')
+img3 = pygame.transform.scale(img3, (block_width, block_height))
 pocet = 1
 running = True
 # Získaj cestu k adresáru "bloky"
@@ -94,6 +98,10 @@ def draw_map(map_data):
         for x, char in enumerate(row):
             if char == 'S':
                 screen.blit(img, (x * block_width, y * block_height))
+            elif char == 'D':
+                screen.blit(img2, (x * block_width, y * block_height))
+            elif char == 'T':
+                screen.blit(img3, (x * block_width, y * block_height))
             else:
                 screen.blit(img1, (x * block_width, y * block_height))
 
@@ -200,6 +208,10 @@ def zmena():
     if menime[0] is not None and menime[1] is not None and menimena:
         if menimena == 'img.png':
             new_char = 'S'
+        elif menimena == 'door.png':
+            new_char = 'D'
+        elif menimena == 'trap.png':
+            new_char = 'T'
         else:
             new_char = 'X'
 

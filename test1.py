@@ -67,6 +67,11 @@ img = pygame.transform.scale(img, (block_width, block_height))
 img1 = pygame.image.load('bloky/img_1.png')
 img1 = pygame.transform.scale(img1, (block_width, block_height))
 
+img2 = pygame.image.load('bloky/door.png')
+img2 = pygame.transform.scale(img2, (block_width, block_height))
+img3 = pygame.image.load('bloky/trap.png')
+img3 = pygame.transform.scale(img3, (block_width, block_height))
+
 # Nastavenia klienta
 server_address = ('localhost', 12345)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -105,17 +110,28 @@ def draw_map():
         for x, char in enumerate(row):
             if char == 'S':
                 screen.blit(img, (x * block_width, y * block_height))
+            elif char == 'D':
+                screen.blit(img2, (x * block_width, y * block_height))
+            elif char == 'T':
+                screen.blit(img3, (x * block_width, y * block_height))
             else:
                 screen.blit(img1, (x * block_width, y * block_height))
 
 # Funkcia na detekciu kolízií
 def check_collision(player_rect):
+    global MAPP
     for y, row in enumerate(map_data):
         for x, char in enumerate(row):
             if char == 'S':
                 block_rect = pygame.Rect(x * block_width, y * block_height, block_width, block_height)
                 if player_rect.colliderect(block_rect):
                     return True
+            elif char == 'D':
+                print("koneeeeeeeec")
+                MAPP='idemre.json'
+            elif char == 'T':
+                print("skaaaaaaaaap")
+                MAPP = 'map_data.json'
     return False
 
 # Hlavná slučka
