@@ -44,7 +44,7 @@ block_height = screen_height // rows
 img = pygame.image.load('bloky/img.png')
 img = pygame.transform.scale(img, (block_width, block_height))
 
-img1 = pygame.image.load('bloky/img_1.png')
+img1 = pygame.image.load('bloky/stone.png')
 img1 = pygame.transform.scale(img1, (block_width, block_height))
 
 # Nastavenia klienta
