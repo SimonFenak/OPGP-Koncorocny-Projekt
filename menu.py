@@ -1,8 +1,8 @@
 import pygame
 import sys
 import serverUDP
-import test1
-import test2
+#import test1
+#import test2
 
 # Initialize Pygame
 pygame.init()
@@ -123,5 +123,4 @@ def game():
     # Placeholder for the game loop, currently just exits to menu
     main_menu()
 
-
-sub_menu()
+main_menu()
