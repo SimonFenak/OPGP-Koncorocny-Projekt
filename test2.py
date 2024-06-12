@@ -94,8 +94,8 @@ for i in dekoralist:
     dekoracie.append(dekoracia(nazov=i[0], osa_x=i[1], osa_y=i[2], velkost_x=block_width, velkost_y=block_height))
 
 # Hráčova pozícia
-playeris = player(block_width, block_height)
-player2 = player(block_width, block_height)
+playeris = player(block_width-5, block_height-2)
+player2 = player(block_width-5, block_height-2)
 prvotnapozx=0
 prvotnapozy=0
 for y, row in enumerate(map_data):
