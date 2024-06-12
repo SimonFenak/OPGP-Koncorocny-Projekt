@@ -80,8 +80,8 @@ server_address = ('localhost', 12345)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Hráčova pozícia
-playeris = player(block_width, block_height)
-player2 = player(block_width, block_height)
+playeris = player(block_width-5, block_height-2)
+player2 = player(block_width-5, block_height-2)
 for y, row in enumerate(map_data):
     for x, char in enumerate(row):
         if char == 'U':
