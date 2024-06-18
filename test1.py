@@ -151,7 +151,7 @@ kolko=0
 # Hlavná slučka
 running = True
 while running:
-
+    k = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -186,14 +186,12 @@ while running:
         if jump_count >= -15:
             neg = 0.5 if jump_count > 0 else -1
             playeris.player_y -= (jump_count ** 2) * 0.25 * neg  # Adjusted jump physics
-            if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width,
-                                           playeris.player_height)) and skak:
+            if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width,playeris.player_height)) and skak:
                 playeris.player_y += (jump_count ** 2) * 0.25 * neg
                 jump_count = 0
                 skak = False
             if not skak:
-                if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width,
-                                               playeris.player_height)):
+                if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width,playeris.player_height)):
                     player_jump = False
                     playeris.zaokruhli(block_height)
                     skak = True
@@ -221,6 +219,21 @@ while running:
 
     # Prijatie údajov od servera o pozícii červenej kocky
     data, _ = client_socket.recvfrom(1024)
+    print("                                       ",data)
+    if data.decode() == "spoluhrac odpojeny":
+        print(data.decode())
+        while True:
+            udaj, _ = client_socket.recvfrom(1024)
+            if udaj == b"spoluhrac pripojeny":
+                print(udaj)
+                data, _ = client_socket.recvfrom(1024)
+                k = True
+                break
+    elif data.decode() == "spoluhrac pripojeny":
+        print(data.decode())
+        continue
+    if k:
+        continue
     player2_position = data.decode()
     player2_position=str(player2_position).split(".")
     player2.player_x=int(player2_position[0])
@@ -235,4 +248,6 @@ while running:
 
 # Ukončenie Pygame
 pygame.quit()
+client_socket.sendto("client disconnected".encode(), server_address)
+print("client disconnected")
 sys.exit()

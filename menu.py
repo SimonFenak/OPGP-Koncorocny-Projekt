@@ -141,7 +141,7 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if button_1.collidepoint((mx, my)):
                     serverUDP.main()
-                    return sub_menu()
+                    #sub_menu()
                 if button_2.collidepoint((mx, my)):
                     settings_menu()  # Open settings menu
                 if button_3.collidepoint((mx, my)):

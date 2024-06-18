@@ -170,6 +170,7 @@ def check_collision(player_rect):
 # Hlavná slučka
 running = True
 while running:
+    k = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -238,6 +239,19 @@ while running:
 
     # Prijatie údajov od servera o pozícii červenej kocky
     data, _ = client_socket.recvfrom(1024)
+    if data.decode() == "spoluhrac odpojeny":
+        print(data.decode())
+        while True:
+            udaj, _ = client_socket.recvfrom(1024)
+            if udaj == b"spoluhrac pripojeny":
+                data, _ = client_socket.recvfrom(1024)
+                k = True
+                break
+    elif data.decode() == "spoluhrac pripojeny":
+        print(data.decode())
+        continue
+    if k:
+        continue
     player2_position = data.decode().split(".")
     player2.player_x = int(player2_position[0])
     player2.player_y = int(player2_position[1])
@@ -252,6 +266,8 @@ while running:
 
 # Ukončenie Pygame
 pygame.quit()
+client_socket.sendto("client disconnected".encode(), server_address)
+print("client disconnected")
 sys.exit()
 
 
