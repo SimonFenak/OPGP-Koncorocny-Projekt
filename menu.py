@@ -30,13 +30,11 @@ button_image = pygame.image.load('obrazky/button.png')  # Image for buttons
 background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
 button_image = pygame.transform.scale(button_image, (200, 50))
 
-
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, True, color)
     textrect = textobj.get_rect()
     textrect.center = (x, y)
     surface.blit(textobj, textrect)
-
 
 def draw_text_with_outline(text, font, text_color, outline_color, surface, x, y):
     # Render the outline by drawing text with an offset
@@ -46,6 +44,38 @@ def draw_text_with_outline(text, font, text_color, outline_color, surface, x, y)
             draw_text(text, font, outline_color, surface, x + dx, y + dy)
     # Draw the main text
     draw_text(text, font, text_color, surface, x, y)
+
+def settings_menu():
+    while True:
+        win.blit(background_image, (0, 0))
+
+        draw_text_with_outline('Settings', font, GREEN, BLUE, win, WIDTH // 2, HEIGHT // 4)
+
+        # Draw buttons
+        mx, my = pygame.mouse.get_pos()
+
+        back_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 50, 200, 50)
+        sounds_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50)
+
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 50))
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 - 25))
+
+        draw_text('Back', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 75)
+        draw_text('Zvuky', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if back_button.collidepoint((mx, my)):
+                    return  # Go back to the main menu
+                if sounds_button.collidepoint((mx, my)):
+                    # Add functionality for the Zvuky button here
+                    print("Zvuky button clicked")
+
+        pygame.display.update()
+
 
 def sub_menu():
     while True:
@@ -57,31 +87,31 @@ def sub_menu():
         mx, my = pygame.mouse.get_pos()
 
         button_1 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50)
-        button_2 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 75, 200, 50)
-        button_2 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 175, 200, 50)
+        button_2 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 50, 200, 50)
+        button_3 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 125, 200, 50)
 
         win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 - 25))
-        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 75))
-        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 175))
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 50))
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 125))
 
         draw_text('Start Player1', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2)
-        draw_text('Start Player 2', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 100)
-        draw_text('Quit', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 200)
+        draw_text('Start Player 2', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 75)
+        draw_text('Quit', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 150)
 
-        if button_1.collidepoint((mx, my)):
-            if pygame.mouse.get_pressed()[0]:
-                test1.main()
-        if button_2.collidepoint((mx, my)):
-            if pygame.mouse.get_pressed()[0]:
-                test2.main()
-                
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if button_1.collidepoint((mx, my)):
+                    test1.main()
+                if button_2.collidepoint((mx, my)):
+                    test2.main()
+                if button_3.collidepoint((mx, my)):
+                    pygame.quit()
+                    sys.exit()
 
         pygame.display.update()
-
 
 def main_menu():
     while True:
@@ -93,31 +123,32 @@ def main_menu():
         mx, my = pygame.mouse.get_pos()
 
         button_1 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50)
-        button_2 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 75, 200, 50)
+        button_2 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 50, 200, 50)
+        button_3 = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 125, 200, 50)
 
         win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 - 25))
-        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 75))
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 50))
+        win.blit(button_image, (WIDTH // 2 - 100, HEIGHT // 2 + 125))
 
         draw_text('Start', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2)
-        draw_text('Quit', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 100)
-
-        if button_1.collidepoint((mx, my)):
-            if pygame.mouse.get_pressed()[0]:
-                serverUDP.main()
-
-                return sub_menu()
-        if button_2.collidepoint((mx, my)):
-            if pygame.mouse.get_pressed()[0]:
-                pygame.quit()
-                sys.exit()
+        draw_text('Settings', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 75)
+        draw_text('Quit', small_font, WHITE, win, WIDTH // 2, HEIGHT // 2 + 150)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if button_1.collidepoint((mx, my)):
+                    serverUDP.main()
+                    return sub_menu()
+                if button_2.collidepoint((mx, my)):
+                    settings_menu()  # Open settings menu
+                if button_3.collidepoint((mx, my)):
+                    pygame.quit()
+                    sys.exit()
 
         pygame.display.update()
-
 
 def game():
     # Placeholder for the game loop, currently just exits to menu
