@@ -148,11 +148,15 @@ def check_collision(player_rect):
                     return True
             elif char == 'D':
                 block_rect = pygame.Rect(x * block_width, y * block_height, block_width, block_height)
-                player_rect2=pygame.Rect(player2.player_x, player2.player_y, player2.player_width, player2.player_height)
+                player_rect2 = pygame.Rect(player2.player_x, player2.player_y, player2.player_width,
+                                           player2.player_height)
                 if player_rect.colliderect(block_rect) and player_rect2.colliderect(block_rect):
+                    player_position = str(playeris.player_x) + "." + str(playeris.player_y)
+                    # Odošleme pozíciu modrej kocky na server
+                    client_socket.sendto(player_position.encode(), server_address)
                     playeris.player_x = prvotnapozx
                     playeris.player_y = prvotnapozy
-                    map_data=load('idemre.json')['map'][0]
+                    map_data = load('idemre.json')['map'][0]
                     return True
 
             elif char == 'T':
@@ -179,7 +183,6 @@ while running:
                 running = False
             elif event.key == pygame.K_SPACE and not player_jump:
                 player_jump = True
-    g=check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height))
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         playeris.player_x -= playeris.player_speed
@@ -194,17 +197,28 @@ while running:
         playeris.player_y = prvotnapozy
     if not check_collision(pygame.Rect(playeris.player_x, playeris.player_y + playeris.player_speed, playeris.player_width, playeris.player_height)):
         playeris.player_y += playeris.player_speed
-
+    else:
+        # Zaisťuje, že hráč sa nezaborí do zeme
+        while check_collision(
+                pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height)):
+            playeris.player_y -= 50
+            playeris.zaokruhli(block_height)
+            if check_collision(
+                    pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height)):
+                playeris.player_y -= block_height / 2
+                playeris.zaokruhli(block_height)
     # Kontrola, aby sa hráč nepresunul mimo obrazovky
     if playeris.player_x < 0:
         playeris.player_x = 0
+        playeris.player_y = prvotnapozy
+        playeris.player_x = prvotnapozx
     elif playeris.player_x + playeris.player_width > screen_width:
         playeris.player_x = screen_width - playeris.player_width
 
     if player_jump:
         if jump_count >= -15:
             neg = 0.5 if jump_count > 0 else -1
-            playeris.player_y -= (jump_count ** 2) * 0.25 * neg  # Adjusted jump physics
+            playeris.player_y -= (jump_count ** 2) * 0.25 * neg
             if check_collision(pygame.Rect(playeris.player_x, playeris.player_y, playeris.player_width, playeris.player_height)) and skak:
                 playeris.player_y += (jump_count ** 2) * 0.25 * neg
                 jump_count = 0
