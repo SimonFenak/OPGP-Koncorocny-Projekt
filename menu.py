@@ -7,28 +7,6 @@ import serverUDP
 # Initialize Pygame
 pygame.init()
 
-# Set up display
-WIDTH, HEIGHT = 800, 600
-win = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("PrisonBreak")
-
-# Set up font
-font = pygame.font.Font(None, 74)
-small_font = pygame.font.Font(None, 36)
-
-# Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GREEN = (108, 144, 139)
-BLUE = (0, 0, 0)
-
-# Load images
-background_image = pygame.image.load('obrazky/prison_background.jpeg')  # Image of a prison
-button_image = pygame.image.load('obrazky/button.png')  # Image for buttons
-
-# Resize images
-background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
-button_image = pygame.transform.scale(button_image, (200, 50))
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, True, color)
@@ -76,6 +54,15 @@ def settings_menu():
 
         pygame.display.update()
 
+def loading(client_socket):
+    while True:
+        print("WAITING")
+        data, _ = client_socket.recvfrom(1024)
+        pygame.display.flip()
+        #draw_text_with_outline('Waiting for friend', font, GREEN, BLUE, win, WIDTH // 2, HEIGHT // 4)
+        #pygame.display.update()
+        if data:
+            return data
 
 def sub_menu():
     while True:
@@ -153,5 +140,26 @@ def main_menu():
 def game():
     # Placeholder for the game loop, currently just exits to menu
     main_menu()
+if __name__ == "__name__":
+        # Set up display
+    WIDTH, HEIGHT = 800, 600
+    win = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("PrisonBreak")
 
-main_menu()
+    # Set up font
+    font = pygame.font.Font(None, 74)
+    small_font = pygame.font.Font(None, 36)
+
+    # Colors
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
+    GREEN = (108, 144, 139)
+    BLUE = (0, 0, 0)
+
+    # Load images
+    background_image = pygame.image.load('obrazky/prison_background.jpeg')  # Image of a prison
+    button_image = pygame.image.load('obrazky/button.png')  # Image for buttons
+
+    # Resize images
+    background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
+    button_image = pygame.transform.scale(button_image, (200, 50))

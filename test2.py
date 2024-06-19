@@ -3,6 +3,7 @@ import json
 import pygame
 import socket
 import sys
+import menu
 import copy
 
 class player:
@@ -238,13 +239,14 @@ while running:
     client_socket.sendto(player_position.encode(), server_address)
 
     # Prijatie údajov od servera o pozícii červenej kocky
-    data, _ = client_socket.recvfrom(1024)
+    data = menu.loading(client_socket)
     if data.decode() == "spoluhrac odpojeny":
         print(data.decode())
         while True:
-            udaj, _ = client_socket.recvfrom(1024)
+            udaj = menu.loading(client_socket)
             if udaj == b"spoluhrac pripojeny":
-                data, _ = client_socket.recvfrom(1024)
+                print(udaj)
+                data = menu.loading(client_socket)
                 k = True
                 break
     elif data.decode() == "spoluhrac pripojeny":
