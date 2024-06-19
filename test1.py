@@ -31,6 +31,7 @@ class dekoracia:
 MAPP = 'map_data.json'
 prvotnapozx=0
 prvotnapozy=0
+Level=1
 def load(nazov):
     with open(nazov, 'r', encoding='utf-8') as file:
         level_data = json.load(file)
@@ -139,7 +140,7 @@ def draw_map():
 
 # Funkcia na detekciu kolízií
 def check_collision(player_rect):
-    global MAPP,map_data
+    global MAPP,map_data,Level
     for y, row in enumerate(map_data):
         for x, char in enumerate(row):
             if char == 'S':
@@ -156,7 +157,12 @@ def check_collision(player_rect):
                     client_socket.sendto(player_position.encode(), server_address)
                     playeris.player_x = prvotnapozx
                     playeris.player_y = prvotnapozy
-                    map_data = load('idemre.json')['map'][0]
+                    if Level==1:
+                         Level=2
+                         map_data = load('idemre.json')['map'][0]
+                    else:
+                        map_data = load('map_level.json')['map'][0]
+
                     return True
 
             elif char == 'T':

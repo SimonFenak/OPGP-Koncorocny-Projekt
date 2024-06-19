@@ -70,7 +70,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 # Rozmery mapy
 rows = len(map_data)
 cols = len(map_data[0])
-
+Level=1
 # Vypočítanie veľkosti bloku
 block_width = screen_width // cols
 block_height = screen_height // rows
@@ -139,7 +139,7 @@ def draw_map():
 
 # Funkcia na detekciu kolízií
 def check_collision(player_rect):
-    global MAPP,map_data
+    global MAPP,map_data,Level
     for y, row in enumerate(map_data):
         for x, char in enumerate(row):
             if char == 'S':
@@ -156,7 +156,11 @@ def check_collision(player_rect):
                     client_socket.sendto(player_position.encode(), server_address)
                     playeris.player_x = prvotnapozx
                     playeris.player_y = prvotnapozy
-                    map_data = load('idemre.json')['map'][0]
+                    if Level == 1:
+                        Level = 2
+                        map_data = load('idemre.json')['map'][0]
+                    else:
+                        map_data = load('map_level.json')['map'][0]
                     return True
 
             elif char == 'T':

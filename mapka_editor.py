@@ -48,7 +48,7 @@ screen_info = pygame.display.Info()
 screen_width = screen_info.current_w
 screen_height = screen_info.current_h
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
-aktualnamapa = 'idemre.json'
+aktualnamapa = 'map_level.json'
 # Rozmery mapy
 map_data = load_map_from_json(aktualnamapa)
 print("Načítaná mapa:", map_data)  # Diagnostický výstup
