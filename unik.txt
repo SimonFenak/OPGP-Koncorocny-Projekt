@@ -11,7 +11,7 @@ Postavy:
 
 	 4. Strážnici - 	popis: strážnici, záporná postava stráži väzňov.
 				control: NPC
-
+s
 
 PrisonBreak: Príbeh a Scenár
 Úvod
